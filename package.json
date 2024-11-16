@@ -1,5 +1,6 @@
 {
   "name": "cit-sql",
+  "publisher": "brunodevoliveira",
   "displayName": "cit-sql",
   "description": "Realizar consultas de forma pratica utilizando a interface do VSCode",
   "version": "0.0.1",
