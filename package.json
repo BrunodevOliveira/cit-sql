@@ -1,9 +1,10 @@
 {
   "name": "cit-sql",
   "publisher": "brunodevoliveira",
+  "icon": "icon.png",
   "displayName": "cit-sql",
   "description": "Realizar consultas de forma pratica utilizando a interface do VSCode",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.91.0"
   },
@@ -16,7 +17,7 @@
     "commands": [
       {
         "command": "extension.executeSqlQuery",
-        "title": "Execute SQL Query"
+        "title": "Cit SQL execute"
       }
     ],
     "menus": {
