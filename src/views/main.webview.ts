@@ -14,32 +14,53 @@ export function getWebviewContent(webview: vscode.Webview, context: vscode.Exten
         <link rel="stylesheet" type="text/css" href="${styleUri}">
     </head>
     <body>
-        <details open>
-            <summary>Seleção de Ambiente</summary>
-            <form id="selectForm">
+        <div class="container">
+            <div class="section">
+                <h2><i class="codicon codicon-database"></i> Seleção de Ambiente</h2>
                 <label for="envSelect">Selecione o Ambiente</label>
                 <select id="envSelect" name="envSelect"></select>
-                <button type="button" id="connectBtn">Conectar</button>
-                <button type="button" id="editBtn">Editar</button>
-            </form>
-        </details>
+                <div class="button-group">
+                    <button id="connectBtn"><i class="codicon codicon-plug"></i> Conectar</button>
+                    <button id="editBtn"><i class="codicon codicon-edit"></i> Editar</button>
+                    <button id="newBtn"><i class="codicon codicon-add"></i> Novo</button>
+                </div>
+            </div>
 
-        <details>
-            <summary>Cadastro de Ambiente</summary>
-            <form id="registerForm">
-                <label for="envName">Nome do Ambiente</label>
-                <input type="text" id="envName" name="envName" required>
+            <div id="selectedEnvSection" class="section" style="display: none;">
+                <h2><i class="codicon codicon-check"></i> Ambiente Selecionado</h2>
+                <div class="env-details">
+                    <div>
+                        <strong>Nome:</strong>
+                        <span id="selectedEnvName"></span>
+                    </div>
+                    <div>
+                        <strong>Endpoint:</strong>
+                        <span id="selectedEnvEndpoint"></span>
+                    </div>
+                </div>
+            </div>
 
-                <label for="endpoint">Endpoint</label>
-                <input type="text" id="endpoint" name="endpoint" required>
+            <div id="formSection" class="section" style="display: none;">
+                <h2 id="formTitle"></h2>
+                <form id="envForm">
+                    <input type="hidden" id="originalEnvName" name="originalEnvName">
+                    <label for="envName">Nome do Ambiente</label>
+                    <input type="text" id="envName" name="envName" placeholder="Ex: TRT-23-DEV" required>
 
-                <label for="token">Token</label>
-                <input type="text" id="token" name="token" required>
+                    <label for="endpoint">Endpoint</label>
+                    <input type="text" id="endpoint" name="endpoint" placeholder="https://api.example.com" required>
 
-                <button type="submit">Salvar</button>
-            </form>
-        </details>
+                    <label for="token">Token</label>
+                    <input type="password" id="token" name="token" required>
 
+                    <div class="form-buttons">
+                        <button type="submit"><i class="codicon codicon-save"></i> Salvar Ambiente</button>
+                        <button type="button" id="cancelBtn">Cancelar</button>
+                        <button type="button" id="deleteBtn" class="delete-btn"><i class="codicon codicon-trash"></i> Excluir</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <script src="${scriptUri}"></script>
     </body>
     </html>`;
