@@ -12,8 +12,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.executeSqlQuery",
-    "onCommand:extension.openMenu"
+    "onView:cit-sql-view"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -21,11 +20,6 @@
       {
         "command": "extension.executeSqlQuery",
         "title": "Cit SQL execute"
-      },
-      {
-        "command": "extension.openMenu",
-        "title": "Cit SQL Menu",
-        "icon": "$(database)"
       }
     ],
     "menus": {
@@ -33,19 +27,6 @@
         {
           "when": "editorHasSelection",
           "command": "extension.executeSqlQuery",
-          "group": "navigation"
-        }
-      ],
-      "commandPalette": [
-        {
-          "command": "extension.openMenu",
-          "when": ""
-        }
-      ],
-      "view/title": [
-        {
-          "command": "extension.openMenu",
-          "when": "view == cit-sql-view",
           "group": "navigation"
         }
       ]
@@ -63,7 +44,8 @@
       "cit-sql-view-container": [
         {
           "id": "cit-sql-view",
-          "name": "CIT-SQL"
+          "name": "CIT-SQL",
+          "type": "webview"
         }
       ]
     },

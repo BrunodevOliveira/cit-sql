@@ -2,9 +2,14 @@ import * as vscode from 'vscode';
 import axios from 'axios';
 import criarTabela from './views/tabela.webview';
 import extrairEndpointTokenQuery from './utils/extrairEndpointTokenQuery';
-import { getWebviewContent } from './views/main.webview';
+import { CitSqlViewProvider } from './views/provider';
 
 export function activate(context: vscode.ExtensionContext) {
+    const provider = new CitSqlViewProvider(context);
+
+    context.subscriptions.push(
+        vscode.window.registerWebviewViewProvider(CitSqlViewProvider.viewType, provider));
+
     let disposable = vscode.commands.registerCommand('extension.executeSqlQuery', async () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
@@ -56,57 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    let menuCommand = vscode.commands.registerCommand('extension.openMenu', () => {
-        const panel = vscode.window.createWebviewPanel(
-            'citSqlMenu',
-            'CIT-SQL Menu',
-            vscode.ViewColumn.One,
-            {
-                enableScripts: true,
-                retainContextWhenHidden: true
-            }
-        );
-
-        panel.webview.html = getWebviewContent(panel.webview, context);
-
-        panel.webview.onDidReceiveMessage(
-            message => {
-                switch (message.command) {
-                    case 'saveEnvironment':
-                        let environments = context.globalState.get<any[]>('environments') || [];
-                        const existingEnvIndex = environments.findIndex(env => env.name === message.env.name);
-                        if (existingEnvIndex > -1) {
-                            environments[existingEnvIndex] = message.env;
-                        } else {
-                            environments.push(message.env);
-                        }
-                        context.globalState.update('environments', environments);
-                        panel.webview.postMessage({ command: 'loadEnvironments', envs: environments });
-                        vscode.window.showInformationMessage('Ambiente salvo com sucesso!');
-                        return;
-                    case 'connectToEnvironment':
-                        const envs = context.globalState.get<any[]>('environments') || [];
-                        const selectedEnv = envs.find(env => env.name === message.envName);
-                        if (selectedEnv) {
-                            context.globalState.update('sqlQueryExecutor.endpoint', selectedEnv.endpoint);
-                            context.globalState.update('sqlQueryExecutor.token', selectedEnv.token);
-                            vscode.window.showInformationMessage(`Conectado ao ambiente: ${selectedEnv.name}`);
-                        }
-                        return;
-                    case 'editEnvironment':
-                        // Lógica para editar o ambiente
-                        return;
-                }
-            },
-            undefined,
-            context.subscriptions
-        );
-
-        const environments = context.globalState.get<any[]>('environments') || [];
-        panel.webview.postMessage({ command: 'loadEnvironments', envs: environments });
-    });
-
-    context.subscriptions.push(disposable, menuCommand);
+    context.subscriptions.push(disposable);
 }
 
 function criarWebview(context: vscode.ExtensionContext, htmlContent: string) {

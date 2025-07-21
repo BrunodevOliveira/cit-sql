@@ -14,13 +14,18 @@ export function getWebviewContent(webview: vscode.Webview, context: vscode.Exten
         <link rel="stylesheet" type="text/css" href="${styleUri}">
     </head>
     <body>
-        <div class="tab">
-            <button class="tablinks" onclick="openTab(event, 'Register')">Cadastro de Ambiente</button>
-            <button class="tablinks" onclick="openTab(event, 'Select')">Seleção de Ambiente</button>
-        </div>
+        <details open>
+            <summary>Seleção de Ambiente</summary>
+            <form id="selectForm">
+                <label for="envSelect">Selecione o Ambiente</label>
+                <select id="envSelect" name="envSelect"></select>
+                <button type="button" id="connectBtn">Conectar</button>
+                <button type="button" id="editBtn">Editar</button>
+            </form>
+        </details>
 
-        <div id="Register" class="tabcontent">
-            <h3>Cadastro de Ambiente</h3>
+        <details>
+            <summary>Cadastro de Ambiente</summary>
             <form id="registerForm">
                 <label for="envName">Nome do Ambiente</label>
                 <input type="text" id="envName" name="envName" required>
@@ -33,17 +38,7 @@ export function getWebviewContent(webview: vscode.Webview, context: vscode.Exten
 
                 <button type="submit">Salvar</button>
             </form>
-        </div>
-
-        <div id="Select" class="tabcontent">
-            <h3>Seleção de Ambiente</h3>
-            <form id="selectForm">
-                <label for="envSelect">Selecione o Ambiente</label>
-                <select id="envSelect" name="envSelect"></select>
-                <button type="button" id="connectBtn">Conectar</button>
-                <button type="button" id="editBtn">Editar</button>
-            </form>
-        </div>
+        </details>
 
         <script src="${scriptUri}"></script>
     </body>
