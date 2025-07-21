@@ -1,5 +1,5 @@
 export default function criarTabela(data: any[], endpoint: string): string {
-    if (data.length === 0) return '<h2>Sem registros</h2>';
+    if (data.length === 0) {return '<h2>Sem registros</h2>';}
 
     // Extrair todos os cabeçalhos únicos dos objetos
     const headers = [...new Set(data.flatMap(Object.keys))];
