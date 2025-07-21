@@ -20,13 +20,15 @@
 
     document.getElementById('registerForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        const envName = document.getElementById('envName').value;
-        const endpoint = document.getElementById('endpoint').value;
-        const token = document.getElementById('token').value;
+        const form = e.target;
+        const envName = form.elements.envName.value;
+        const endpoint = form.elements.endpoint.value;
+        const token = form.elements.token.value;
         vscode.postMessage({
             command: 'saveEnvironment',
             env: { name: envName, endpoint: endpoint, token: token }
         });
+        form.reset();
     });
 
     window.addEventListener('message', event => {
