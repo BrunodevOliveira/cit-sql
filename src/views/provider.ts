@@ -43,6 +43,14 @@ export class CitSqlViewProvider implements vscode.WebviewViewProvider {
                     }
                     return;
                 }
+                case 'showEnvironment': {
+                    const environments = this._context.globalState.get<any[]>('environments') || [];
+                    const env = environments.find(e => e.name === message.envName);
+                    if (env) {
+                        webviewView.webview.postMessage({ command: 'showSelectedEnv', env: env });
+                    }
+                    return;
+                }
                 case 'saveEnvironment': {
                     let environments = this._context.globalState.get<any[]>('environments') || [];
                     if (message.originalEnvName && message.originalEnvName !== message.env.name) {

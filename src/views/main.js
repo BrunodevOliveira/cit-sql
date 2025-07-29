@@ -66,7 +66,7 @@
                 });
                 select.value = selectedValue;
                 if (select.value) {
-                    vscode.postMessage({ command: 'getEnvironment', envName: select.value });
+                    vscode.postMessage({ command: 'showEnvironment', envName: select.value });
                 }
                 break;
             case 'loadEnvironment':
@@ -103,7 +103,7 @@
     document.getElementById('envSelect').addEventListener('change', (e) => {
         const selectedEnv = e.target.value;
         if (selectedEnv) {
-            vscode.postMessage({ command: 'getEnvironment', envName: selectedEnv });
+            vscode.postMessage({ command: 'showEnvironment', envName: selectedEnv });
         }
     });
 }());

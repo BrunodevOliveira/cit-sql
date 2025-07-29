@@ -74,14 +74,14 @@ button {
 
 .form-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-top: 15px;
+    gap: 10px;
 }
 
 .form-buttons button[type=submit] {
     background-color: #2E7D32;
     color: white;
-    flex-grow: 1;
 }
 
 .delete-btn {
