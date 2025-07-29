@@ -36,7 +36,7 @@
         {
           "id": "cit-sql-view-container",
           "title": "CIT-SQL",
-          "icon": "$(database)"
+          "icon": "src/favicon.ico"
         }
       ]
     },
