@@ -12,17 +12,18 @@ export function getWebviewContent(webview: vscode.Webview, context: vscode.Exten
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>CIT-SQL</title>
         <link rel="stylesheet" type="text/css" href="${styleUri}">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     </head>
     <body>
         <div class="container">
             <div class="section">
-                <h2><i class="codicon codicon-database"></i> Seleção de Ambiente</h2>
+               
                 <label for="envSelect">Selecione o Ambiente</label>
                 <select id="envSelect" name="envSelect"></select>
                 <div class="button-group">
-                    <button id="connectBtn"><i class="codicon codicon-plug"></i> Conectar</button>
-                    <button id="editBtn"><i class="codicon codicon-edit"></i> Editar</button>
-                    <button id="newBtn"><i class="codicon codicon-add"></i> Novo</button>
+                    <button id="connectBtn"><i class="material-symbols-outlined">power</i> Conectar</button>
+                    <button id="editBtn"><i class="material-symbols-outlined">edit</i> Editar</button>
+                    <button id="newBtn"><i class="material-symbols-outlined">add</i> Novo</button>
                 </div>
             </div>
 
