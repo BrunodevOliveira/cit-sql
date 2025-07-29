@@ -58,7 +58,7 @@ export function activate(context: vscode.ExtensionContext) {
             criarWebview(context, tabelaHtml);
         } catch (error:any) {
 
-            vscode.window.showErrorMessage(`Error ao realizar a consulta: ${error.message || error}`);
+            vscode.window.showErrorMessage(`Error ao realizar a consulta: ${error.response.data.message || error}`);
         }
     });
 
