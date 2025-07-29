@@ -1,8 +1,8 @@
-import * as vscode from 'vscode';
 import axios from 'axios';
-import criarTabela from './views/tabela.webview';
+import * as vscode from 'vscode';
 import extrairEndpointTokenQuery from './utils/extrairEndpointTokenQuery';
 import { CitSqlViewProvider } from './views/provider';
+import criarTabela from './views/tabela.webview';
 
 export function activate(context: vscode.ExtensionContext) {
     const provider = new CitSqlViewProvider(context);
@@ -56,8 +56,9 @@ export function activate(context: vscode.ExtensionContext) {
 
             const tabelaHtml = criarTabela(data, finalEndpoint);
             criarWebview(context, tabelaHtml);
-        } catch (error) {
-            vscode.window.showErrorMessage(`Error ao realizar a consulta: ${error}`);
+        } catch (error:any) {
+
+            vscode.window.showErrorMessage(`Error ao realizar a consulta: ${error.response.data.message}`);
         }
     });
 
