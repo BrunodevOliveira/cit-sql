@@ -11,7 +11,9 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onView:cit-sql-view"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
@@ -26,6 +28,24 @@
           "when": "editorHasSelection",
           "command": "extension.executeSqlQuery",
           "group": "navigation"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "cit-sql-view-container",
+          "title": "CIT-SQL",
+          "icon": "$(database)"
+        }
+      ]
+    },
+    "views": {
+      "cit-sql-view-container": [
+        {
+          "id": "cit-sql-view",
+          "name": "CIT-SQL",
+          "type": "webview"
         }
       ]
     },
