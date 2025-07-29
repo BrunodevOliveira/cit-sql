@@ -65,9 +65,6 @@
                     select.appendChild(option);
                 });
                 select.value = selectedValue;
-                if (select.value) {
-                    vscode.postMessage({ command: 'showEnvironment', envName: select.value });
-                }
                 break;
             case 'loadEnvironment':
                 formTitle.innerHTML = '<i class="codicon codicon-edit"></i> Edição de Ambiente';
@@ -79,7 +76,7 @@
                 selectedEnvSection.style.display = 'none';
                 formSection.style.display = 'block';
                 break;
-            case 'showSelectedEnv':
+            case 'connectionSuccess':
                 document.getElementById('selectedEnvName').textContent = message.env.name;
                 document.getElementById('selectedEnvEndpoint').textContent = message.env.endpoint;
                 selectedEnvSection.style.display = 'block';
@@ -88,7 +85,6 @@
             case 'clearForm':
                 envForm.reset();
                 formSection.style.display = 'none';
-                selectedEnvSection.style.display = 'block';
                 break;
         }
     });
@@ -101,9 +97,8 @@
     });
 
     document.getElementById('envSelect').addEventListener('change', (e) => {
-        const selectedEnv = e.target.value;
-        if (selectedEnv) {
-            vscode.postMessage({ command: 'showEnvironment', envName: selectedEnv });
-        }
+        selectedEnvSection.style.display = 'none';
     });
+
+    vscode.postMessage({ command: 'getConnectionStatus' });
 }());

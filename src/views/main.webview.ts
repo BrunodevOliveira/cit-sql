@@ -28,7 +28,7 @@ export function getWebviewContent(webview: vscode.Webview, context: vscode.Exten
             </div>
 
             <div id="selectedEnvSection" class="section" style="display: none;">
-                <h2><i class="codicon codicon-check"></i> Ambiente Selecionado</h2>
+                <h2><i class="codicon codicon-check"></i> Ambiente conectado</h2>
                 <div class="env-details">
                     <div>
                         <strong>Nome:</strong>

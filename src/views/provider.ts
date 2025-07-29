@@ -89,8 +89,16 @@ export class CitSqlViewProvider implements vscode.WebviewViewProvider {
                     if (selectedEnv) {
                         this._context.globalState.update('sqlQueryExecutor.endpoint', selectedEnv.endpoint);
                         this._context.globalState.update('sqlQueryExecutor.token', selectedEnv.token);
-                        webviewView.webview.postMessage({ command: 'showSelectedEnv', env: selectedEnv });
+                        this._context.globalState.update('connectedEnvironment', selectedEnv);
+                        webviewView.webview.postMessage({ command: 'connectionSuccess', env: selectedEnv });
                         vscode.window.showInformationMessage(`Conectado ao ambiente: ${selectedEnv.name}`);
+                    }
+                    return;
+                }
+                case 'getConnectionStatus': {
+                    const connectedEnv = this._context.globalState.get<any>('connectedEnvironment');
+                    if (connectedEnv) {
+                        webviewView.webview.postMessage({ command: 'connectionSuccess', env: connectedEnv });
                     }
                     return;
                 }
