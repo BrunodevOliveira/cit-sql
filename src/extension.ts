@@ -30,15 +30,19 @@ export function activate(context: vscode.ExtensionContext) {
         if (endpoint) {
             context.globalState.update('sqlQueryExecutor.endpoint', endpoint);
         }
-        if (token) {
-            context.globalState.update('sqlQueryExecutor.token', token);
-        }
 
         const storedEndpoint = context.globalState.get('sqlQueryExecutor.endpoint') as string;
-        const storedToken = context.globalState.get('sqlQueryExecutor.token') as string;
-
         const finalEndpoint = endpoint || storedEndpoint;
-        const finalToken = token || storedToken;
+
+        let finalToken: string | undefined = token;
+
+        if (!finalToken) {
+            const connectedEnv = context.globalState.get<{ name: string }>('connectedEnvironment');
+            if (connectedEnv) {
+                const key = `cit-sql.env.${connectedEnv.name}`;
+                finalToken = await context.secrets.get(key);
+            }
+        }
 
         if (!finalEndpoint || !finalToken) {
             vscode.window.showErrorMessage('Endpoint ou token não fornecidos');
