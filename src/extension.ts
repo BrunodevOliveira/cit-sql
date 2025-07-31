@@ -36,9 +36,11 @@ export function activate(context: vscode.ExtensionContext) {
 
         let finalToken: string | undefined = token;
 
+        let envName = "Endpoint direto";
         if (!finalToken) {
             const connectedEnv = context.globalState.get<{ name: string }>('connectedEnvironment');
             if (connectedEnv) {
+                envName = connectedEnv.name;
                 const key = `cit-sql.env.${connectedEnv.name}`;
                 finalToken = await context.secrets.get(key);
             }
@@ -58,8 +60,18 @@ export function activate(context: vscode.ExtensionContext) {
             }
 
 
-            const tabelaHtml = criarTabela(data, finalEndpoint);
-            criarWebview(context, tabelaHtml);
+            const panel = vscode.window.createWebviewPanel(
+                'sqlResults', 
+                'Resultado da Consulta SQL', 
+                vscode.ViewColumn.One, 
+                {
+                    enableScripts: true,
+                    retainContextWhenHidden: true,
+                    enableFindWidget: true,
+                }
+            );
+
+            panel.webview.html = criarTabela(data, envName, panel.webview, context);
         } catch (error:any) {
 
             vscode.window.showErrorMessage(`Error ao realizar a consulta: ${error.response.data.message || error}`);
@@ -69,21 +81,6 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(disposable);
 }
 
-function criarWebview(context: vscode.ExtensionContext, htmlContent: string) {
-    // Criar e mostrar o painel webview
-    const panel = vscode.window.createWebviewPanel(
-        'sqlResults', // Identificador único
-        'Resultado da Consulta SQL', // Título mostrado ao usuário
-        vscode.ViewColumn.One, // Coluna onde será aberto
-        {
-            enableScripts: true,
-            retainContextWhenHidden: true,
-            enableFindWidget: true,
-        }
-    );
 
-    // Definir o conteúdo HTML do webview
-    panel.webview.html = htmlContent;
-}
 
 export function deactivate() {}
