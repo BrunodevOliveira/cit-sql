@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as vscode from 'vscode';
 import extrairEndpointTokenQuery from './utils/extrairEndpointTokenQuery';
 import { CitSqlViewProvider } from './views/provider';
-import criarTabela from './views/tabela.webview';
+import criarTabela from './views/tabela/tabela.webview';
 
 export function activate(context: vscode.ExtensionContext) {
     const provider = new CitSqlViewProvider(context);
