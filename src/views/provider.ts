@@ -28,7 +28,9 @@ export class CitSqlViewProvider implements vscode.WebviewViewProvider {
 
         webviewView.webview.html = getWebviewContent(webviewView.webview, this._context);
 
-        webviewView.webview.onDidReceiveMessage(message => {
+        webviewView.webview.onDidReceiveMessage(async message => {
+            const key = (name: string) => `cit-sql.env.${name}`;
+
             switch (message.command) {
                 case 'getEnvironments': {
                     const environments = this._context.globalState.get<any[]>('environments') || [];
@@ -39,7 +41,12 @@ export class CitSqlViewProvider implements vscode.WebviewViewProvider {
                     const environments = this._context.globalState.get<any[]>('environments') || [];
                     const env = environments.find(e => e.name === message.envName);
                     if (env) {
-                        webviewView.webview.postMessage({ command: 'loadEnvironment', env: env });
+                        let token = await this._context.secrets.get(key(env.name));
+                        if (!token && env.token) { // Migração implícita
+                            token = env.token;
+                            await this._context.secrets.store(key(env.name), token!);
+                        }
+                        webviewView.webview.postMessage({ command: 'loadEnvironment', env: { ...env, token } });
                     }
                     return;
                 }
@@ -53,18 +60,25 @@ export class CitSqlViewProvider implements vscode.WebviewViewProvider {
                 }
                 case 'saveEnvironment': {
                     let environments = this._context.globalState.get<any[]>('environments') || [];
-                    if (message.originalEnvName && message.originalEnvName !== message.env.name) {
+                    const { token, ...envData } = message.env;
+
+                    if (message.originalEnvName && message.originalEnvName !== envData.name) {
                         const index = environments.findIndex(e => e.name === message.originalEnvName);
                         if (index !== -1) {
                             environments.splice(index, 1);
+                            await this._context.secrets.delete(key(message.originalEnvName));
                         }
                     }
-                    const existingEnvIndex = environments.findIndex(e => e.name === message.env.name);
+
+                    await this._context.secrets.store(key(envData.name), token);
+
+                    const existingEnvIndex = environments.findIndex(e => e.name === envData.name);
                     if (existingEnvIndex > -1) {
-                        environments[existingEnvIndex] = message.env;
+                        environments[existingEnvIndex] = envData;
                     } else {
-                        environments.push(message.env);
+                        environments.push(envData);
                     }
+
                     this._context.globalState.update('environments', environments);
                     webviewView.webview.postMessage({ command: 'loadEnvironments', envs: environments });
                     webviewView.webview.postMessage({ command: 'clearForm' });
@@ -77,6 +91,7 @@ export class CitSqlViewProvider implements vscode.WebviewViewProvider {
                     if (index !== -1) {
                         environments.splice(index, 1);
                         this._context.globalState.update('environments', environments);
+                        await this._context.secrets.delete(key(message.envName));
                         webviewView.webview.postMessage({ command: 'loadEnvironments', envs: environments });
                         webviewView.webview.postMessage({ command: 'clearForm' });
                         vscode.window.showInformationMessage('Ambiente excluído com sucesso!');
@@ -87,9 +102,15 @@ export class CitSqlViewProvider implements vscode.WebviewViewProvider {
                     const environments = this._context.globalState.get<any[]>('environments') || [];
                     const selectedEnv = environments.find(env => env.name === message.envName);
                     if (selectedEnv) {
+                        // Migração de token legado para o SecretStorage
+                        if (selectedEnv.token) {
+                            await this._context.secrets.store(key(selectedEnv.name), selectedEnv.token);
+                            delete selectedEnv.token; // Remove o token do objeto em memória
+                            this._context.globalState.update('environments', environments); // Atualiza a lista sem o token
+                        }
+
                         this._context.globalState.update('sqlQueryExecutor.endpoint', selectedEnv.endpoint);
-                        this._context.globalState.update('sqlQueryExecutor.token', selectedEnv.token);
-                        this._context.globalState.update('connectedEnvironment', selectedEnv);
+                        this._context.globalState.update('connectedEnvironment', { name: selectedEnv.name, endpoint: selectedEnv.endpoint });
                         webviewView.webview.postMessage({ command: 'connectionSuccess', env: selectedEnv });
                         vscode.window.showInformationMessage(`Conectado ao ambiente: ${selectedEnv.name}`);
                     }
