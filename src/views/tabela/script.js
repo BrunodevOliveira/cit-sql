@@ -34,8 +34,16 @@ function sortData() {
     }
 
     filteredData.sort((a, b) => {
-        const aValue = a[sortField];
-        const bValue = b[sortField];
+        let aValue = a[sortField];
+        let bValue = b[sortField];
+
+        const aNum = Number(aValue);
+        const bNum = Number(bValue);
+
+        if (!isNaN(aNum) && !isNaN(bNum)) {
+            aValue = aNum;
+            bValue = bNum;
+        }
 
         if (typeof aValue === 'number' && typeof bValue === 'number') {
             return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
