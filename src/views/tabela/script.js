@@ -9,20 +9,7 @@ const tableBody = document.getElementById('tableBody');
 const recordCount = document.getElementById('recordCount');
 const footerInfo = document.getElementById('footerInfo');
 const exportBtn = document.getElementById('exportBtn');
-const toast = document.getElementById('toast');
-const toastTitle = document.getElementById('toastTitle');
-const toastDescription = document.getElementById('toastDescription');
 
-// Função para mostrar toast
-function showToast(title, description) {
-    toastTitle.textContent = title;
-    toastDescription.textContent = description;
-    toast.classList.add('show');
-    
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 3000);
-}
 
 // Função de busca
 function filterData() {
@@ -137,20 +124,10 @@ function exportToCsv() {
         )
     ].join('\n');
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', `export_${new Date().toISOString().split('T')[0]}.csv`);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    showToast(
-        'Exportação realizada', 
-        `Arquivo CSV com ${filteredData.length} registros foi baixado com sucesso.`
-    );
+    vscode.postMessage({
+        command: 'exportToCsv',
+        payload: csvContent
+    });
 }
 
 // Event Listeners

@@ -47,7 +47,7 @@ export default function criarTabela(data: any[], envName: string, webview: vscod
                         </div>
                         <button id="exportBtn" class="export-btn">
                             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m7-10 3 3-3 3M8 5l3 3-3 3"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2M7 11l5 5 5-5M12 4v12"></path>
                             </svg>
                             Exportar CSV
                         </button>

@@ -71,6 +71,27 @@ export function activate(context: vscode.ExtensionContext) {
                 }
             );
 
+            panel.webview.onDidReceiveMessage(
+                async message => {
+                    switch (message.command) {
+                        case 'exportToCsv':
+                            const uri = await vscode.window.showSaveDialog({
+                                filters: {
+                                    'CSV': ['csv']
+                                }
+                            });
+
+                            if (uri) {
+                                vscode.workspace.fs.writeFile(uri, Buffer.from(message.payload, 'utf8'));
+                                vscode.window.showInformationMessage('Arquivo CSV salvo com sucesso!');
+                            }
+                            return;
+                    }
+                },
+                undefined,
+                context.subscriptions
+            );
+
             panel.webview.html = criarTabela(data, envName, panel.webview, context);
         } catch (error:any) {
 
