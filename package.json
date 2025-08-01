@@ -2,9 +2,24 @@
   "name": "cit-sql",
   "publisher": "brunodevoliveira",
   "icon": "icon.png",
-  "displayName": "cit-sql",
-  "description": "Realizar consultas de forma pratica utilizando a interface do VSCode",
+  "displayName": "Cit-SQL",
+  "description": "Execute consultas SQL diretamente no VSCode, gerenciando múltiplos ambientes e exibindo os resultados de forma prática.",
   "version": "0.0.2",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brunodevoliveira/cit-sql.git"
+  },
+  "bugs": {
+    "url": "https://github.com/brunodevoliveira/cit-sql/issues"
+  },
+  "keywords": [
+    "sql",
+    "database",
+    "query",
+    "citsmart",
+    "cit-sql"
+  ],
   "engines": {
     "vscode": "^1.91.0"
   },
