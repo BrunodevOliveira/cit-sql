@@ -8,8 +8,8 @@ export default function criarTabela(data: any[], envName: string, webview: vscod
 
     const headers = [...new Set(data.flatMap(Object.keys))];
 
-    const styleUri = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'src', 'views', 'tabela', 'style.css'));
-    const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'src', 'views', 'tabela', 'script.js'));
+    const styleUri = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'out', 'views', 'tabela', 'style.css'));
+    const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'out', 'views', 'tabela', 'script.js'));
 
     const html = `
     <!DOCTYPE html>

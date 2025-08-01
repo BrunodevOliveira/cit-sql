@@ -71,7 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
             );
 
-            panel.iconPath = vscode.Uri.joinPath(context.extensionUri, 'src', 'assets', 'database.png');
+            panel.iconPath = vscode.Uri.joinPath(context.extensionUri, 'out', 'assets', 'database.png');
 
             panel.webview.onDidReceiveMessage(
                 async message => {

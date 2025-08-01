@@ -51,7 +51,7 @@
         {
           "id": "cit-sql-view-container",
           "title": "CIT-SQL",
-          "icon": "src/favicon.ico"
+          "icon": "out/favicon.ico"
         }
       ]
     },
@@ -84,7 +84,7 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
+    "compile": "tsc -p ./ && (robocopy src out *.css *.js *.ico *.png /E || copyfiles -u 1 src/**/*.css src/**/*.js src/**/*.ico src/**/*.png out)",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
@@ -98,6 +98,7 @@
     "@typescript-eslint/parser": "^7.11.0",
     "@vscode/test-cli": "^0.0.9",
     "@vscode/test-electron": "^2.4.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.57.0",
     "typescript": "^5.4.5"
   },

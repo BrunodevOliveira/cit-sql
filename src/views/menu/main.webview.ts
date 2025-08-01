@@ -2,8 +2,8 @@
 import * as vscode from 'vscode';
 
 export function getWebviewContent(webview: vscode.Webview, context: vscode.ExtensionContext) {
-    const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'src', 'views', 'menu', 'main.js'));
-    const styleUri = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'src', 'views', 'menu', 'main.css'));
+    const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'out', 'views', 'menu', 'main.js'));
+    const styleUri = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'out', 'views', 'menu', 'main.css'));
 
     return `<!DOCTYPE html>
     <html lang="en">
