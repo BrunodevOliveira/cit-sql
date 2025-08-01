@@ -79,6 +79,7 @@
             case 'connectionSuccess':
                 document.getElementById('selectedEnvName').textContent = message.env.name;
                 document.getElementById('selectedEnvEndpoint').textContent = message.env.endpoint;
+                document.getElementById('envSelect').value = message.env.name;
                 selectedEnvSection.style.display = 'block';
                 formSection.style.display = 'none';
                 break;

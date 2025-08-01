@@ -1,0 +1,362 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background: hsl(251, 100%, 99%);
+    --foreground: hsl(230, 15%, 15%);
+    --card: hsl(0, 0%, 100%);
+    --card-foreground: hsl(230, 15%, 15%);
+    --primary: hsl(239, 84%, 67%);
+    --primary-foreground: hsl(0, 0%, 100%);
+    --primary-glow: hsl(239, 100%, 85%);
+    --secondary: hsl(251, 91%, 95%);
+    --secondary-foreground: hsl(230, 15%, 15%);
+    --muted: hsl(251, 50%, 97%);
+    --muted-foreground: hsl(230, 10%, 50%);
+    --accent: hsl(300, 100%, 97%);
+    --accent-foreground: hsl(300, 84%, 33%);
+    --destructive: hsl(0, 84%, 67%);
+    --destructive-foreground: hsl(0, 0%, 100%);
+    --border: hsl(251, 50%, 90%);
+    --input: hsl(251, 50%, 96%);
+    --ring: hsl(239, 84%, 67%);
+    --table-header: hsl(251, 91%, 95%);
+    --table-row-hover: hsl(251, 100%, 98%);
+    --table-row-selected: hsl(239, 100%, 97%);
+    --gradient-primary: linear-gradient(135deg, hsl(239, 84%, 67%), hsl(239, 100%, 85%));
+    --shadow-elegant: 0 10px 30px -10px hsl(239, 84%, 67%, 0.15);
+    --shadow-table: 0 4px 20px -4px hsl(230, 15%, 15%, 0.1);
+}
+
+body[data-theme='dark'] {
+    --background: hsl(230, 15%, 15%);
+    --foreground: hsl(251, 100%, 99%);
+    --card: hsl(230, 15%, 20%);
+    --card-foreground: hsl(251, 100%, 99%);
+    --primary: hsl(239, 70%, 75%);
+    --primary-foreground: hsl(230, 15%, 15%);
+    --primary-glow: hsl(239, 84%, 67%);
+    --secondary: hsl(230, 15%, 25%);
+    --secondary-foreground: hsl(251, 100%, 99%);
+    --muted: hsl(230, 15%, 25%);
+    --muted-foreground: hsl(251, 15%, 65%);
+    --accent: hsl(300, 84%, 33%);
+    --accent-foreground: hsl(300, 100%, 97%);
+    --destructive: hsl(0, 70%, 60%);
+    --destructive-foreground: hsl(0, 0%, 100%);
+    --border: hsl(230, 15%, 30%);
+    --input: hsl(230, 15%, 25%);
+    --ring: hsl(239, 70%, 75%);
+    --table-header: hsl(230, 15%, 25%);
+    --table-row-hover: hsl(230, 15%, 22%);
+    --table-row-selected: hsl(239, 70%, 30%);
+    --shadow-elegant: 0 10px 30px -10px hsl(239, 84%, 67%, 0.1);
+    --shadow-table: 0 4px 20px -4px hsl(0, 0%, 0%, 0.2);
+}
+
+.theme-toggle-btn {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-elegant);
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--primary);
+}
+
+.theme-toggle-btn svg {
+    width: 20px;
+    height: 20px;
+    color: var(--foreground);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(to bottom right, var(--background), var(--background), var(--muted));
+    color: var(--foreground);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    /* max-width: 1200px;
+    margin: 0 auto; */
+    padding: 2rem 1rem;
+    margin-top: 32px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.header p {
+    font-size: 1.125rem;
+    color: var(--muted-foreground);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    padding: 1.5rem;
+    box-shadow: var(--shadow-elegant);
+}
+
+.card-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.card-title h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--foreground);
+}
+
+.card-title p {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 300px;
+}
+
+.search-container {
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: var(--muted-foreground);
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--input);
+    color: var(--foreground);
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--ring);
+    box-shadow: 0 0 0 2px hsl(239, 84%, 67%, 0.2);
+}
+
+.export-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--foreground);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.export-btn:hover {
+    background: var(--muted);
+    border-color: var(--primary);
+}
+
+.table-card {
+    overflow: hidden;
+    box-shadow: var(--shadow-table);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    background: var(--table-header);
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--foreground);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.table th:hover {
+    background: var(--muted);
+}
+
+.table th .sort-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sort-icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.5;
+    transition: all 0.2s ease;
+}
+
+.sort-icon.active {
+    opacity: 1;
+    color: var(--primary);
+}
+
+.table td {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.875rem;
+}
+
+.table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.table tbody tr:hover {
+    background: var(--table-row-hover);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 1px solid;
+}
+
+.status-ativo {
+    background: hsl(120, 60%, 95%);
+    color: hsl(120, 60%, 30%);
+    border-color: hsl(120, 60%, 80%);
+}
+
+.status-inativo {
+    background: hsl(0, 60%, 95%);
+    color: hsl(0, 60%, 30%);
+    border-color: hsl(0, 60%, 80%);
+}
+
+.status-ferias {
+    background: hsl(210, 60%, 95%);
+    color: hsl(210, 60%, 30%);
+    border-color: hsl(210, 60%, 80%);
+}
+
+.status-licenca {
+    background: hsl(45, 60%, 95%);
+    color: hsl(45, 60%, 30%);
+    border-color: hsl(45, 60%, 80%);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+}
+
+.empty-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 1rem;
+    color: var(--muted-foreground);
+}
+
+.footer-info {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    margin-top: 1rem;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+    .card-content {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .controls {
+        flex-direction: row;
+        min-width: auto;
+    }
+}
+
+@media (max-width: 767px) {
+    .container {
+        padding: 1rem 0.5rem;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+    }
+}

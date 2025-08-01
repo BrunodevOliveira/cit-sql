@@ -2,8 +2,8 @@
 import * as vscode from 'vscode';
 
 export function getWebviewContent(webview: vscode.Webview, context: vscode.ExtensionContext) {
-    const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'src', 'views', 'main.js'));
-    const styleUri = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'src', 'views', 'main.css'));
+    const scriptUri = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'out', 'views', 'menu', 'main.js'));
+    const styleUri = webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'out', 'views', 'menu', 'main.css'));
 
     return `<!DOCTYPE html>
     <html lang="en">
@@ -28,7 +28,7 @@ export function getWebviewContent(webview: vscode.Webview, context: vscode.Exten
             </div>
 
             <div id="selectedEnvSection" class="section" style="display: none;">
-                <h2><i class="codicon codicon-check"></i> Ambiente conectado</h2>
+                <h2><i class="material-symbols-outlined">check_circle</i> Ambiente conectado</h2>
                 <div class="env-details">
                     <div>
                         <strong>Nome:</strong>

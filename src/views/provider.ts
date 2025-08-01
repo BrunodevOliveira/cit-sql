@@ -1,6 +1,6 @@
 
 import * as vscode from 'vscode';
-import { getWebviewContent } from './main.webview';
+import { getWebviewContent } from './menu/main.webview';
 
 export class CitSqlViewProvider implements vscode.WebviewViewProvider {
 
