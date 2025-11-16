@@ -74,7 +74,7 @@ export function activate(context: vscode.ExtensionContext) {
             panel.iconPath = vscode.Uri.joinPath(context.extensionUri, 'out', 'assets', 'database.png');
 
             panel.webview.onDidReceiveMessage(
-                async message => {
+                async (message: { command: string; payload: string }) => {
                     switch (message.command) {
                         case 'exportToCsv':
                             const uri = await vscode.window.showSaveDialog({
@@ -84,7 +84,9 @@ export function activate(context: vscode.ExtensionContext) {
                             });
 
                             if (uri) {
-                                vscode.workspace.fs.writeFile(uri, Buffer.from(message.payload, 'utf8'));
+                                const buffer = Buffer.from(message.payload, 'utf8');
+                                const uint8Array = new Uint8Array(buffer);
+                                await vscode.workspace.fs.writeFile(uri, uint8Array);
                                 vscode.window.showInformationMessage('Arquivo CSV salvo com sucesso!');
                             }
                             return;
