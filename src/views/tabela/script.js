@@ -66,15 +66,15 @@ function updateSortIcons() {
         icon.classList.remove('active');
         icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4 4 4m6 0v12m0 0 4-4m-4 4-4-4"></path>';
     });
-
+    
     if (sortField) {
-        const activeHeader = document.querySelector(`th[data-field="${sortField}"] .sort-icon`);
-        if (activeHeader) {
-            activeHeader.classList.add('active');
+        const activeButton = document.querySelector(`.sort-btn[data-field="${sortField}"] .sort-icon`);
+        if (activeButton) {
+            activeButton.classList.add('active');
             if (sortDirection === 'asc') {
-                activeHeader.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M5 8l2-2 2 2"></path>';
+                activeButton.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M5 8l2-2 2 2"></path>';
             } else if (sortDirection === 'desc') {
-                activeHeader.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20V4M5 16l2 2 2-2"></path>';
+                activeButton.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20V4M5 16l2 2 2-2"></path>';
             }
         }
     }
@@ -146,9 +146,14 @@ searchInput.addEventListener('input', (e) => {
 
 exportBtn.addEventListener('click', exportToCsv);
 
-document.querySelectorAll('th[data-field]').forEach(header => {
-    header.addEventListener('click', () => {
-        const field = header.getAttribute('data-field');
+document.querySelectorAll('.sort-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const sortButton = e.target.closest('.sort-btn');
+        if(!sortButton) {return;}
+        
+        e.stopPropagation(); // Evita propagação do evento
+        
+        const field = button.getAttribute('data-field');
         
         if (sortField === field) {
             if (sortDirection === 'asc') {

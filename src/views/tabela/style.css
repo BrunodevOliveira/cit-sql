@@ -238,20 +238,45 @@ body {
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--foreground);
-    cursor: pointer;
-    user-select: none;
+    user-select: text;
+    cursor: default;
     transition: background-color 0.2s ease;
     white-space: nowrap;
-}
-
-.table th:hover {
-    background: var(--muted);
 }
 
 .table th .sort-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 0.5rem;
+}
+
+.table th .header-text {
+    flex: 1;
+    user-select: text; 
+    cursor: text;
+}
+
+.sort-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    color: var(--foreground);
+}
+
+.sort-btn:hover {
+    background: var(--muted);
+}
+
+.sort-btn:active {
+    transform: scale(0.95);
 }
 
 .sort-icon {
@@ -259,6 +284,7 @@ body {
     height: 16px;
     opacity: 0.5;
     transition: all 0.2s ease;
+    pointer-events: none;
 }
 
 .sort-icon.active {

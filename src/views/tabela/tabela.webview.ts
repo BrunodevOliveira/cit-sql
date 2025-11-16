@@ -63,10 +63,14 @@ export default function criarTabela(data: any[], envName: string, webview: vscod
                                 ${headers.map(header => `
                                 <th data-field="${header}">
                                     <div class="sort-header">
-                                        ${header}
-                                        <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4 4 4m6 0v12m0 0 4-4m-4 4-4-4"></path>
-                                        </svg>
+                                        <span class="header-text">${header}</span>
+                                        
+                                        <button class="sort-btn" data-field="${header}" title="Ordenar coluna">
+                                            <svg class="sort-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4 4 4m6 0v12m0 0 4-4m-4 4-4-4"></path>
+                                            </svg>
+                                        </button>
+
                                     </div>
                                 </th>
                                 `).join('')}
