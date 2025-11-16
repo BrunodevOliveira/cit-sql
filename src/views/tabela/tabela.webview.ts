@@ -51,6 +51,13 @@ export default function criarTabela(data: any[], envName: string, webview: vscod
                             </svg>
                             Exportar CSV
                         </button>
+                        <button id="copyJsonBtn" class="export-btn">                                                                                                
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 10" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1H2z"/>
+                            </svg>
+                            Copiar JSON                                                                                                                             
+                        </button>  
                     </div>
                 </div>
             </div>

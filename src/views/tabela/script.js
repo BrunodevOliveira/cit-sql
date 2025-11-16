@@ -9,6 +9,7 @@ const tableBody = document.getElementById('tableBody');
 const recordCount = document.getElementById('recordCount');
 const footerInfo = document.getElementById('footerInfo');
 const exportBtn = document.getElementById('exportBtn');
+const copyJsonBtn = document.getElementById('copyJsonBtn');
 
 
 // Função de busca
@@ -138,6 +139,37 @@ function exportToCsv() {
     });
 }
 
+//Copiar dados JSON para área de transferência
+function copyJsonToClipboard() {                                                                                                                                
+    if (!navigator.clipboard) {                                                                                                                                 
+        // Fallback para navegadores mais antigos ou ambientes sem a API                                                                                        
+        console.error('A API de Clipboard não é suportada neste ambiente.');                                                                                    
+        return;                                                                                                                                                 
+    }                                                                                                                                                           
+                                                                                                                                                                
+    // Usamos 'currentData' para pegar os dados originais, não filtrados.                                                                                       
+    // JSON.stringify com 'null, 2' formata o JSON para melhor legibilidade.                                                                                    
+    
+    const jsonString = JSON.stringify(currentData, null, 2);                                                                                                    
+    const originalButtonContent = copyJsonBtn.innerHTML;                                                                                                        
+                                                                                                                                                                
+    navigator.clipboard.writeText(jsonString).then(() => {                                                                                                      
+        // Feedback visual para o usuário                                                                                                                       
+        copyJsonBtn.innerHTML = `                                                                                                                               
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">                                                                  
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>                                                
+            </svg>                                                                                                                                              
+            Copiado!                                                                                                                                            
+        `;                                                                                                                                                      
+        // Volta ao normal após 2 segundos                                                                                                                      
+        setTimeout(() => {                                                                                                                                      
+            copyJsonBtn.innerHTML = originalButtonContent;
+        }, 2000);
+    }).catch(err => {                                                                                                                      
+        console.error('Falha ao copiar dados: ', err);                                                                                     
+    });
+}
+
 // Event Listeners
 searchInput.addEventListener('input', (e) => {
     searchTerm = e.target.value;
@@ -145,6 +177,7 @@ searchInput.addEventListener('input', (e) => {
 });
 
 exportBtn.addEventListener('click', exportToCsv);
+copyJsonBtn.addEventListener('click', copyJsonToClipboard);
 
 document.querySelectorAll('.sort-btn').forEach(button => {
     button.addEventListener('click', (e) => {
